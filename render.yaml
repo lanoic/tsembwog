@@ -4,7 +4,7 @@ services:
     env: python
     runtime: docker
     rootDir: backend
-    plan: starter
+    plan: basic-256mb
     autoDeploy: true
     region: oregon
     envVars:
@@ -35,5 +35,5 @@ services:
 
 databases:
   - name: tsembwog-db
-    plan: starter
+    plan: basic-256mb
     postgresMajorVersion: 17
