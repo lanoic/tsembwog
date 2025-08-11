@@ -4,7 +4,7 @@ services:
     env: python
     runtime: docker
     rootDir: backend
-    plan: basic-256mb
+    plan: starter
     autoDeploy: true
     region: oregon
     envVars:
