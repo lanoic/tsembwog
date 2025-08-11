@@ -1,0 +1,33 @@
+{
+  "title": "Tsembwog Overview",
+  "schemaVersion": 38,
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Requests (total)",
+      "targets": [
+        {
+          "expr": "tsembwog_requests_total"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Model Retrains",
+      "targets": [
+        {
+          "expr": "tsembwog_model_trains_total"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "REGO Predict P95",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(tsembwog_rego_predict_seconds_bucket[5m])) by (le))"
+        }
+      ]
+    }
+  ]
+}

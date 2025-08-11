@@ -1,29 +1,37 @@
-
-version: '3.8'
-
+version: "3.9"
 services:
   db:
-    image: postgres
-    restart: always
+    image: postgres:15
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: energydb
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+      POSTGRES_USER: tsembwog
+      POSTGRES_PASSWORD: tsembwog
+      POSTGRES_DB: tsembwog
+    volumes: [ "dbdata:/var/lib/postgresql/data" ]
+    ports: [ "5432:5432" ]
 
   backend:
     build: ./backend
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
+    depends_on: [ db ]
     environment:
-      - DATABASE_URL=postgresql://user:password@db:5432/energydb
-    volumes:
-      - ./backend:/app
+      - DATABASE_URL=postgresql+psycopg2://tsembwog:tsembwog@db:5432/tsembwog
+      - SECRET_KEY=please-change-me
+      - ACCESS_TOKEN_EXPIRE_MINUTES=120
+      - CORS_ORIGINS=*
+    ports: [ "8000:8000" ]
+    volumes: [ "./backend:/app" ]
 
-volumes:
-  postgres_data:
+  frontend:
+    build: ./frontend
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+    ports: [ "3000:3000" ]
+    depends_on: [ backend ]
+    volumes: [ "./frontend:/usr/src/app" ]
+volumes: { dbdata: {} }
+
+redis:
+  image: redis:7
+  ports:
+    - "6379:6379"
+  volumes:
+    - redisdata:/data

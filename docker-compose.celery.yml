@@ -1,0 +1,41 @@
+version: "3.9"
+services:
+  worker:
+    build: ./backend
+    command: celery -A celery_app.app worker --loglevel=INFO
+    working_dir: /app
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - DATABASE_URL=postgresql+psycopg2://tsembwog:tsembwog@db:5432/tsembwog
+      - SECRET_KEY=please-change-me
+    depends_on: [redis, db]
+    volumes:
+      - ./backend:/app
+
+  beat:
+    build: ./backend
+    command: celery -A celery_app.app beat --loglevel=INFO
+    working_dir: /app
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    depends_on: [redis]
+    volumes:
+      - ./backend:/app
+
+  redis:
+    image: redis:7
+    ports: [ "6379:6379" ]
+    volumes: [ "redisdata:/data" ]
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: tsembwog
+      POSTGRES_PASSWORD: tsembwog
+      POSTGRES_DB: tsembwog
+    volumes: [ "dbdata:/var/lib/postgresql/data" ]
+    ports: [ "5432:5432" ]
+
+volumes:
+  dbdata:
+  redisdata:

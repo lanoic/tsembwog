@@ -1,0 +1,1 @@
+import axios from 'axios';const api=axios.create({baseURL:process.env.REACT_APP_API_URL||'http://localhost:8000'});export function setToken(t){if(t){api.defaults.headers.common['Authorization']=`Bearer ${t}`}else{delete api.defaults.headers.common['Authorization']}}export default api;

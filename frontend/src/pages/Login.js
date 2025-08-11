@@ -1,16 +1,1 @@
-import React from 'react';
-
-function Login() {
-  return (
-    <div className="p-10 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Login</h1>
-      <form className="space-y-4">
-        <input type="email" placeholder="Email" className="w-full p-2 border border-gray-300 rounded" />
-        <input type="password" placeholder="Password" className="w-full p-2 border border-gray-300 rounded" />
-        <button className="w-full bg-blue-600 text-white py-2 rounded">Login</button>
-      </form>
-    </div>
-  );
-}
-
-export default Login;
+import React,{useState} from 'react';import api from '../api';import {useTranslation} from 'react-i18next';export default function Login({onLogin}){const {t}=useTranslation();const [email,setEmail]=useState('user@tsembwog.com');const [password,setPassword]=useState('user123');const submit=async(e)=>{e.preventDefault();const form=new FormData();form.append('username',email);form.append('password',password);const {data}=await api.post('/auth/login',form);onLogin(data.access_token)};return(<div className='max-w-sm mx-auto p-6'><h2 className='text-xl font-semibold mb-4'>{t('login')}</h2><form onSubmit={submit} className='space-y-3'><input className='w-full border p-2 rounded' placeholder={t('email')} value={email} onChange={e=>setEmail(e.target.value)}/><input type='password' className='w-full border p-2 rounded' placeholder={t('password')} value={password} onChange={e=>setPassword(e.target.value)}/><button className='w-full border rounded py-2'>Sign In</button></form></div>)}

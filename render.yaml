@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: tsembwog-backend
+    env: python
+    runtime: docker
+    rootDir: backend
+    plan: starter
+    autoDeploy: true
+    region: oregon
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: tsembwog-db
+          property: connectionString
+      - key: SECRET_KEY
+        sync: false
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "120"
+      - key: CORS_ORIGINS
+        value: "https://tsembwog.live,https://www.tsembwog.live,*"
+      - key: USE_S3
+        value: "false"
+      - key: S3_BUCKET
+        sync: false
+      - key: S3_PREFIX
+        value: "models/"
+      - key: MODEL_DIR
+        value: "/data/models"
+      - key: SENTRY_DSN
+        sync: false
+    disk:
+      name: models
+      mountPath: /data
+      sizeGB: 1
+
+databases:
+  - name: tsembwog-db
+    plan: starter
+    postgresMajorVersion: 15

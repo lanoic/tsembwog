@@ -1,30 +1,12 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-import NavigationBar from './components/NavigationBar';
-import Home from './pages/Home';
-import About from './pages/About';
-import Dashboard from './pages/Dashboard';
-import Login from './pages/Login';
-import Contact from './pages/Contact';
-
-function App() {
-  return (
-    <Router>
-      <Helmet>
-        <title>Tsembwog Energy Platform</title>
-        <meta name="description" content="Smart clean energy aggregation system" />
-      </Helmet>
-      <NavigationBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes>
-    </Router>
-  );
-}
-
-export default App;
+import React,{useState,useEffect} from 'react';import {BrowserRouter as Router,Routes,Route,Link,Navigate} from 'react-router-dom';import {Helmet} from 'react-helmet';import Home from './pages/Home';import Login from './pages/Login';import Dashboard from './pages/Dashboard';import Certificates from './pages/Certificates';import DSR from './pages/DSR';import BTM from './pages/BTM';
+import Intelligence from './pages/Intelligence';
+import AdminFlags from './pages/AdminFlags';
+import Monitoring from './pages/Monitoring';
+import AdminUsers from './pages/AdminUsers';
+import AdminOrgs from './pages/AdminOrgs';
+import AdminOps from './pages/AdminOps';import {setToken} from './api';import './i18n/init';function App(){const [token,setTok]=useState(localStorage.getItem('token'));const [dark,setDark]=useState(false);useEffect(()=>{setToken(token)},[token]);return(<div className={dark?'dark':''}><Helmet><title>Tsembwog</title></Helmet><div className='min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100'><Router><nav className='p-4 flex justify-between'><div className='space-x-4'><Link to='/'>Home</Link><Link to='/certs'>Certificates</Link><Link to='/dsr'>DSR</Link><Link to='/btm'>BTM</Link><Link to='/dashboard'>Dashboard</Link></div><div className='space-x-2'><button className='px-2 py-1 border rounded' onClick={()=>setDark(d=>!d)}>{dark?'Light':'Dark'}</button>{token?<button className='px-2 py-1 border rounded' onClick={()=>{localStorage.removeItem('token');setTok(null)}}>Logout</button>:<Link to='/login' className='px-2 py-1 border rounded'>Login</Link>}</div></nav><Routes><Route path='/' element={<Home/>}/><Route path='/login' element={<Login onLogin={(t)=>{localStorage.setItem('token',t);setTok(t)}}/>}/><Route path='/dashboard' element={token?<Dashboard/>:<Navigate to='/login'/>}/><Route path='/certs' element={token?<Certificates/>:<Navigate to='/login'/>}/><Route path='/dsr' element={token?<DSR/>:<Navigate to='/login'/>}/><Route path='/btm' element={token?<BTM/>:<Navigate to='/login'/>}/>  <Route path="/monitoring" element={token ? <Monitoring/> : <Navigate to="/login"/>} />
+                <Route path="/admin-flags" element={token && me?.is_admin ? <AdminFlags/> : <Navigate to="/login"/>} />
+                <Route path="/admin-users" element={token && me?.is_admin ? <AdminUsers/> : <Navigate to="/login"/>} />
+                <Route path="/admin-orgs" element={token && me?.is_admin ? <AdminOrgs/> : <Navigate to="/login"/>} />
+                <Route path="/admin-ops" element={token && me?.is_admin ? <AdminOps/> : <Navigate to="/login"/>} />
+              </Routes></Router></div></div>)}export default App;

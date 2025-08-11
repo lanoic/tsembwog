@@ -1,12 +1,1 @@
-import React from 'react';
-
-function Home() {
-  return (
-    <div className="p-10 text-center">
-      <h1 className="text-4xl font-bold text-blue-800">Welcome to Tsembwog</h1>
-      <p className="mt-4 text-lg">Empowering clean energy aggregation and smart grid innovation.</p>
-    </div>
-  );
-}
-
-export default Home;
+import React from 'react';import {useTranslation} from 'react-i18next';export default function Home(){const {t,i18n}=useTranslation();return(<div className='p-10 text-center'><h1 className='text-3xl font-bold'>{t('welcome')}</h1><div className='mt-4 space-x-2'><button className='px-3 py-1 border rounded' onClick={()=>i18n.changeLanguage('en')}>EN</button><button className='px-3 py-1 border rounded' onClick={()=>i18n.changeLanguage('fr')}>FR</button></div></div>)}

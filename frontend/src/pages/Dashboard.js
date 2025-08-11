@@ -1,12 +1,1 @@
-import React from 'react';
-
-function Dashboard() {
-  return (
-    <div className="p-10">
-      <h1 className="text-xl font-semibold">Your Dashboard</h1>
-      <p className="text-gray-600 mt-2">Monitor your assets, certificates, and energy usage in real time.</p>
-    </div>
-  );
-}
-
-export default Dashboard;
+import React,{useEffect,useRef} from 'react';import {Chart,LineController,LineElement,PointElement,LinearScale,Title,CategoryScale} from 'chart.js';Chart.register(LineController,LineElement,PointElement,LinearScale,Title,CategoryScale);export default function Dashboard(){const ref=useRef(null);useEffect(()=>{const ctx=ref.current.getContext('2d');const c=new Chart(ctx,{type:'line',data:{labels:['Jan','Feb','Mar','Apr','May','Jun'],datasets:[{label:'REGO Performance (MWh)',data:[10,20,15,30,28,40]}]},options:{responsive:true,plugins:{title:{display:true,text:'Portfolio'}}}});return()=>c.destroy()},[]);return(<div className='p-6'><h2 className='text-xl font-semibold mb-4'>Analytics</h2><canvas ref={ref} height='120'></canvas></div>)}
