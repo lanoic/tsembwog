@@ -36,4 +36,4 @@ services:
 databases:
   - name: tsembwog-db
     plan: starter
-#     postgresMajorVersion: 15
+    postgresMajorVersion: 17
