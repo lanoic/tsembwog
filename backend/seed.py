@@ -18,7 +18,7 @@ def run():
         db.add_all([c1,c2]); db.commit()
     db.close()
 if __name__=="__main__": run()
-
     # demo api key
     if not db.query(APIKey).first():
-        db.add(APIKey(key='DEMO-KEY', label='demo', owner_user_id=admin.id)); db.commit()
+        db.add(APIKey(key='DEMO-KEY', label='demo', owner_user_id=admin.id));
+        db.commit()
