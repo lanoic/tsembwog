@@ -6,6 +6,12 @@ import os, sys
 # this is the Alembic Config object, which provides access to the values within the .ini file in use.
 config = context.config
 
+
+# 👇 Pull DATABASE_URL from environment (Render, Docker, local)
+db_url = os.getenv("DATABASE_URL")
+if db_url:
+    config.set_main_option("sqlalchemy.url", db_url)
+
 # Interpret the config file for Python logging.
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
