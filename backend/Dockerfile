@@ -7,6 +7,8 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # Copy backend as a package folder
 COPY . /app/backend
+COPY alembic.ini /app/alembic.ini
+COPY alembic /app/alembic
 
 # Ensure Python can import the 'backend' package
 ENV PYTHONPATH=/app

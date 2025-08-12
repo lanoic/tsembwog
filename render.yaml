@@ -3,7 +3,7 @@ services:
     name: tsembwog-backend
     env: python
     runtime: docker
-    rootDir: backend
+    rootDir: .
     plan: starter
     autoDeploy: true
     region: oregon
