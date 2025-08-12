@@ -7,7 +7,7 @@ from .security import hash_password
 
 def run() -> None:
     """Create tables and seed minimal, idempotent demo data."""
-    Base.metadata.create_all(bind=engine)
+    # Base.metadata.create_all(bind=engine)
     db = SessionLocal()
     try:
         # --- Organization ---

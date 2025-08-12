@@ -6,7 +6,7 @@ from . import routers_auth, routers_rego, routers_dsr, routers_btm, routers_ai, 
 from .metrics import router as metrics_router
 from . import routers_queue
 from .schedulers import scheduler
-Base.metadata.create_all(bind=engine); seed.run()
+# Base.metadata.create_all(bind=engine); seed.run()
 app = FastAPI(title="tsembwog API")
 from .middleware import AuditMiddleware, RateLimitMiddleware
 import os
